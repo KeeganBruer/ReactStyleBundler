@@ -1,6 +1,14 @@
 ## React Style Bundler
 
-## Usage
+## Installation
+
+```
+npm i react-style-bundler
+```
+
+## Setup
+
+### ESBuild Setup
 
 In your esbuild script.
 ```typescript
@@ -19,6 +27,7 @@ function build() {
 }
 ```
 
+## Using the Styler
 In your project:
 ```typescript
 //Import the bundler instance

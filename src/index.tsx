@@ -1,15 +1,17 @@
-import React from "react"
+import * as React from "react";
 
 class Styler {
     stylesheet:string;
+    gen:()=>number
     constructor() {
         this.stylesheet = "";
+        this.gen = mulberry32(1202)
     }
     addStyles(_css:string) {
         this.stylesheet += _css + "\n"
     }
     div(_css:TemplateStringsArray) {
-        let className = uniqueID()
+        let className = "Gen"+uniqueID(this.gen)
         let css = parseCSS(className, _css.join(""));
         this.addStyles(css)
         return (props:any)=>{
@@ -22,13 +24,13 @@ class Styler {
 }
 export const ReactStyleBundler = new Styler();
 
-function uniqueID() {
+function uniqueID(rand:()=>number) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < 10) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        result += characters.charAt(Math.floor(rand() * charactersLength));
         counter += 1;
     }
     return result;
@@ -72,18 +74,11 @@ function parseCSS(className:string, _css:string) {
     return css;
 }
 
-
-ReactStyleBundler.div`
-    width: 200px;
-    &:hover {
-        height: 300px;
+function mulberry32(a:number) {
+    return function() {
+      var t = a += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
     }
-`
-ReactStyleBundler.div`
-    height: 200px;
-    &:hover {
-        color: red;
-    }
-`
-
-console.log(ReactStyleBundler.getCSSBundle())
+}
