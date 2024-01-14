@@ -35,8 +35,14 @@ import {ReactStyleBundler as Styler} from "react-style-bundler"
 //Create a styled component
 const Wrapper = Styler.div`
     height: 200px;
+    width: 200px;
+
     &:hover {
         color: red;
+    }
+    
+    & > span {
+        width: 50%;
     }
 `
 
@@ -44,8 +50,18 @@ const Wrapper = Styler.div`
 function Component(props:{}) {
     return (
         <Wrapper>
-            Hi
+            <span>Hi</span>
         </Wrapper>
     )
 }
 ```
+
+
+## Change Log
+### 1.1.1 - Readme Patch
+- removal of line in the Readme
+
+### 1.1.0 - First Stable Release
+- ESBuild support
+- uses import structure to bundle css
+- minimal css parsing. allows for styling the component, access global styles with any bracket statement, and styling sub components using "&"
