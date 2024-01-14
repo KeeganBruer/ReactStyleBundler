@@ -28,7 +28,6 @@ function build() {
 ```
 
 ## Using the Styler
-In your project:
 ```typescript
 //Import the bundler instance
 import {ReactStyleBundler as Styler} from "react-style-bundler"
