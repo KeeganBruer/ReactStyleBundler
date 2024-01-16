@@ -30,9 +30,9 @@ class Styler {
             constructor(props:{className?:string}) {
                 super(props);
                 this.element = new StyledComponent({
+                    ...props,
                     comp_id,
-                    comp_type:"div",
-                    className:props.className
+                    comp_type:"div"
                 })
             }
             getClassName() {

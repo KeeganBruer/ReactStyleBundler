@@ -25,11 +25,7 @@ class Styler {
         class BoundStyleElement extends React.Component {
             constructor(props) {
                 super(props);
-                this.element = new StyledComponent({
-                    comp_id,
-                    comp_type: "div",
-                    className: props.className
-                });
+                this.element = new StyledComponent(Object.assign(Object.assign({}, props), { comp_id, comp_type: "div" }));
             }
             getClassName() {
                 return `.${comp_id}`;

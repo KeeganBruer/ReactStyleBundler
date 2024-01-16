@@ -1,6 +1,6 @@
 {
   "name": "react-style-bundler",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "A CSS Style bundler for react and esbuild",
   "main": "./build/main.js",
   "module": "./build/index.js",
