@@ -106,6 +106,9 @@ Your App component needs to be the merge point for your client/server functional
 Be carful when adding styles to the client side bundle higher than the shared App component as it will not be imported on the server, causing it to be lacking from the bundle.
 
 ## Change Log
+### 1.1.6 - Readme Improvements
+- Adds the useGeneratedClass utility to retreieve the generated classname from the bound style component
+
 ### 1.1.5 - Readme Improvements
 - Adds SSR explanation and example
 

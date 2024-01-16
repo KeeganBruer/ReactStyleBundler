@@ -10,20 +10,48 @@ class Styler {
     addStyles(_css:string) {
         this.stylesheet += _css + "\n"
     }
-    div(_css:TemplateStringsArray) {
-        let className = "Gen"+uniqueID(this.gen)
-        let css = parseCSS(className, _css.join(""));
-        this.addStyles(css)
-        return (props:any)=>{
-            return <StyledComponent comp_type="div" comp_id={className} {...props}/>
+    div(_css:TemplateStringsArray, ...args: any[]) {
+        console.log(_css, args)
+        let comp_id = "Gen"+uniqueID(this.gen)
+        let buildCSS = "";
+        for (let i = 0; i < _css.length; i++) {
+            buildCSS += _css[i]
+            if (i < args.length) {
+                if (typeof args[i] == "function") {
+                    args[i]()
+                }
+                buildCSS += args[i]
+            }
         }
+        let css = parseCSS(comp_id, buildCSS);
+        this.addStyles(css)
+        class BoundStyleElement extends React.Component<any> {
+            element:StyledComponent
+            constructor(props:{className?:string}) {
+                super(props);
+                this.element = new StyledComponent({
+                    comp_id,
+                    comp_type:"div",
+                    className:props.className
+                })
+            }
+            getClassName() {
+                return `.${comp_id}`
+            }
+            render(): React.ReactNode {
+                return this.element.render()
+            }
+        }
+        return BoundStyleElement
     }
     getCSSBundle() {
         return this.stylesheet;
     }
 }
 export const ReactStyleBundler = new Styler();
-
+export function useGeneratedClass(BoundStyleElement:{prototype:{getClassName:Function}}) {
+    return BoundStyleElement.prototype.getClassName();
+}
 function uniqueID(rand:()=>number) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

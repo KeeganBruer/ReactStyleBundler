@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReactStyleBundler = void 0;
+exports.useGeneratedClass = exports.ReactStyleBundler = void 0;
 const React = __importStar(require("react"));
 class Styler {
     constructor() {
@@ -33,19 +33,48 @@ class Styler {
     addStyles(_css) {
         this.stylesheet += _css + "\n";
     }
-    div(_css) {
-        let className = "Gen" + uniqueID(this.gen);
-        let css = parseCSS(className, _css.join(""));
+    div(_css, ...args) {
+        console.log(_css, args);
+        let comp_id = "Gen" + uniqueID(this.gen);
+        let buildCSS = "";
+        for (let i = 0; i < _css.length; i++) {
+            buildCSS += _css[i];
+            if (i < args.length) {
+                if (typeof args[i] == "function") {
+                    args[i]();
+                }
+                buildCSS += args[i];
+            }
+        }
+        let css = parseCSS(comp_id, buildCSS);
         this.addStyles(css);
-        return (props) => {
-            return React.createElement(StyledComponent, Object.assign({ comp_type: "div", comp_id: className }, props));
-        };
+        class BoundStyleElement extends React.Component {
+            constructor(props) {
+                super(props);
+                this.element = new StyledComponent({
+                    comp_id,
+                    comp_type: "div",
+                    className: props.className
+                });
+            }
+            getClassName() {
+                return `.${comp_id}`;
+            }
+            render() {
+                return this.element.render();
+            }
+        }
+        return BoundStyleElement;
     }
     getCSSBundle() {
         return this.stylesheet;
     }
 }
 exports.ReactStyleBundler = new Styler();
+function useGeneratedClass(BoundStyleElement) {
+    return BoundStyleElement.prototype.getClassName();
+}
+exports.useGeneratedClass = useGeneratedClass;
 function uniqueID(rand) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
