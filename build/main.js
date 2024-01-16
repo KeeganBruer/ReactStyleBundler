@@ -25,7 +25,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactStyleBundler = void 0;
 const React = __importStar(require("react"));
-const StyledComponent_1 = require("./StyledComponent");
 class Styler {
     constructor() {
         this.stylesheet = "";
@@ -39,7 +38,7 @@ class Styler {
         let css = parseCSS(className, _css.join(""));
         this.addStyles(css);
         return (props) => {
-            return React.createElement(StyledComponent_1.StyledComponent, Object.assign({ comp_type: "div", comp_id: className }, props));
+            return React.createElement(StyledComponent, Object.assign({ comp_type: "div", comp_id: className }, props));
         };
     }
     getCSSBundle() {
@@ -100,4 +99,22 @@ function mulberry32(a) {
         t ^= t + Math.imul(t ^ t >>> 7, t | 61);
         return ((t ^ t >>> 14) >>> 0) / 4294967296;
     };
+}
+class StyledComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.comp_type = props.comp_type;
+        this.comp_id = props.comp_id;
+    }
+    render() {
+        let classNames = [
+            this.comp_id
+        ];
+        if (this.props.className != undefined)
+            classNames.push(...this.props.className.split(" "));
+        let newProps = Object.assign(Object.assign({}, this.props), { className: classNames.join(" ") });
+        delete newProps["comp_type"];
+        delete newProps["comp_id"];
+        return React.createElement(this.comp_type, newProps);
+    }
 }
