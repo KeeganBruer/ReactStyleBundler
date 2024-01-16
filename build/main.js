@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReactStyleBundler = void 0;
 const React = __importStar(require("react"));
+const StyledComponent_1 = require("./StyledComponent");
 class Styler {
     constructor() {
         this.stylesheet = "";
@@ -38,7 +39,7 @@ class Styler {
         let css = parseCSS(className, _css.join(""));
         this.addStyles(css);
         return (props) => {
-            return React.createElement("div", Object.assign({}, props, { className: className }));
+            return React.createElement(StyledComponent_1.StyledComponent, Object.assign({ comp_type: "div", comp_id: className }, props));
         };
     }
     getCSSBundle() {

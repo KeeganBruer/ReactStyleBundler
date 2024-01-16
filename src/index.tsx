@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StyledComponent } from "./StyledComponent";
 
 class Styler {
     stylesheet:string;
@@ -15,7 +16,7 @@ class Styler {
         let css = parseCSS(className, _css.join(""));
         this.addStyles(css)
         return (props:any)=>{
-            return <div {...props} className={className}/>
+            return <StyledComponent comp_type="div" comp_id={className} {...props}/>
         }
     }
     getCSSBundle() {

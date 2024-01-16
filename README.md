@@ -40,7 +40,7 @@ const Wrapper = Styler.div`
     &:hover {
         color: red;
     }
-    
+
     & > span {
         width: 50%;
     }
@@ -58,6 +58,10 @@ function Component(props:{}) {
 
 
 ## Change Log
+### 1.1.2 & 1.1.3 - Component Wrapper
+- Introduces the StyledComponent, which facilitates the extention of the styled object
+- Allows you to pass a className prop to the returned styled component, appending it to the generated class name
+
 ### 1.1.1 - Readme Patch
 - removal of line in the Readme
 

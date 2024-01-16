@@ -1,6 +1,6 @@
 {
   "name": "react-style-bundler",
-  "version": "1.1.0",
+  "version": "1.1.3",
   "description": "A CSS Style bundler for react and esbuild",
   "main": "./build/main.js",
   "module": "./build/index.js",
@@ -13,12 +13,16 @@
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
+    "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "react": "^18.2.0"
   },
-  "files": ["build"],
+  "files": [
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KeeganBruer/ReactStyleBundler.git"
@@ -26,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/KeeganBruer/ReactStyleBundler/issues"
   },
-  "homepage": "https://github.com/KeeganBruer/ReactStyleBundler#readme",
+  "homepage": "https://keeganbruer.com/Projects/ReactStyleBundler",
   "keywords": [
     "react",
     "styling",

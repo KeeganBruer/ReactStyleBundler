@@ -1,4 +1,5 @@
 import * as React from "react";
+import { StyledComponent } from "./StyledComponent";
 class Styler {
     constructor() {
         this.stylesheet = "";
@@ -12,7 +13,7 @@ class Styler {
         let css = parseCSS(className, _css.join(""));
         this.addStyles(css);
         return (props) => {
-            return React.createElement("div", Object.assign({}, props, { className: className }));
+            return React.createElement(StyledComponent, Object.assign({ comp_type: "div", comp_id: className }, props));
         };
     }
     getCSSBundle() {
